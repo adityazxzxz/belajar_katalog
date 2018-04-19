@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class PlayingFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>> {
     Context context;
     static final String EXTRAS_MOVIE = "EXTRAS_MOVIE";
-    MovieAdapter adapter;
+    CardViewAdapter adapter;
 
     public PlayingFragment() {
         // Required empty public constructor
@@ -37,10 +37,10 @@ public class PlayingFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        adapter = new MovieAdapter(getActivity());
+        adapter = new CardViewAdapter(getActivity());
         adapter.notifyDataSetChanged();
         View view = inflater.inflate(R.layout.fragment_playing,container,false);
-        EditText editMovie = (EditText)view.findViewById(R.id.txt_film);
+        final EditText editMovie = (EditText)view.findViewById(R.id.txt_film);
         Button btnCari = (Button)view.findViewById(R.id.btn_search);
         RecyclerView rvMovie = (RecyclerView)view.findViewById(R.id.rv_movies);
         rvMovie.setHasFixedSize(true);
