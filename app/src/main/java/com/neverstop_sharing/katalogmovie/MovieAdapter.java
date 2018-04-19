@@ -23,6 +23,7 @@ public class MovieAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context context;
 
+
     public MovieAdapter(Context context){
         this.context = context;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

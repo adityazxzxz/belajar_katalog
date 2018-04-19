@@ -18,8 +18,8 @@ import cz.msebera.android.httpclient.Header;
  * Created by aditya.pratama on 3/27/2018.
  */
 
-
-public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MovieItems>> {
+//<ArrayList<MovieItems>>
+public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<MovieItems>> {
     private ArrayList<MovieItems> mData;
     private boolean mHasResult = false;
     private String mKumpulanFilm;
@@ -75,7 +75,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MovieItems>> {
                 try {
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
-                    //Log.d("TAG ERROR",responseObject.toString());
+                    Log.d("TAGRESPONSE",responseObject.toString());
                     JSONArray list = responseObject.getJSONArray("results");
                     for (int i=0;i<list.length();i++){
                         JSONObject movie = list.getJSONObject(i);
