@@ -45,20 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
-        searchView.setQueryHint(getResources().getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
         return true;
     }
 
@@ -109,14 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragmentTransaction.commit();
     }
 
-    private void upComingFragment(){
-        FragmentManager mFragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        UpcomingFragment upcomingFragment = new UpcomingFragment();
-        mFragmentTransaction.replace(R.id.frame_container,upcomingFragment,SearchFragment.class.getSimpleName());
-        mFragmentTransaction.addToBackStack(null);
-        mFragmentTransaction.commit();
-    }
 
 
 }

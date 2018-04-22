@@ -48,8 +48,6 @@ public class PlayingFragment extends Fragment implements LoaderManager.LoaderCal
         adapter = new CardViewAdapter(getActivity());
         adapter.notifyDataSetChanged();
 
-        final EditText editMovie = (EditText)view.findViewById(R.id.txt_film);
-        Button btnCari = (Button)view.findViewById(R.id.btn_search);
 
         if(adapter.getItemCount() == 0){
             Log.d("TESTER","kosong");
@@ -62,20 +60,9 @@ public class PlayingFragment extends Fragment implements LoaderManager.LoaderCal
         rvMovie.setAdapter(adapter);
 
 
-        btnCari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String movie = editMovie.getText().toString();
-                if (TextUtils.isEmpty(movie))return;
-                Bundle bundle = new Bundle();
-                bundle.putString(EXTRAS_MOVIE,movie);
-                getLoaderManager().restartLoader(0,bundle, PlayingFragment.this);
-            }
-        });
 
-        String movie = editMovie.getText().toString();
+
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRAS_MOVIE,movie);
 
         getLoaderManager().initLoader(0,bundle,this);
 
