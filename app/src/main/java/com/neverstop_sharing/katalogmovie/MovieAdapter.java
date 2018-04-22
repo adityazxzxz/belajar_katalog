@@ -56,7 +56,6 @@ public class MovieAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.d("MDATA_SIZE", String.valueOf(mData));
         return mData.size();
     }
 

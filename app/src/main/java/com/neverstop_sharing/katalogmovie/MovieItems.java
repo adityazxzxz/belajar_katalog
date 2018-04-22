@@ -23,7 +23,6 @@ public class MovieItems {
     public MovieItems(JSONObject object){
         try {
             int id = object.getInt("id");
-            String judul = object.getString("title");
             String title = object.getString("title");
             String deskripsi = object.getString("overview").substring(0,20)+"...";
             String deskripsi_full = object.getString("overview");

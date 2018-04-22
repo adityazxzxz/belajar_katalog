@@ -1,7 +1,7 @@
 package com.neverstop_sharing.katalogmovie;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -14,28 +14,24 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-/**
- * Created by aditya.pratama on 3/27/2018.
- */
-
-//<ArrayList<MovieItems>>
-public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<MovieItems>> {
-    private ArrayList<MovieItems> listMovie;
+public class LoaderNowPlaying extends AsyncTaskLoader<ArrayList<MovieItems>> {
+    private ArrayList<MovieItems>listMovie;
+    private String kumpulanFilm;
     private boolean mHasResult = false;
-    private String mKumpulanFilm;
 
-    public MyAsyncTaskLoader(final Context context, String kumpulanFilm){
+    public LoaderNowPlaying(Context context, String kumpulanFilm){
         super(context);
         onContentChanged();
-        this.mKumpulanFilm = kumpulanFilm;
+        this.kumpulanFilm = kumpulanFilm;
     }
 
     @Override
     protected void onStartLoading() {
-        if (takeContentChanged())
+        if (takeContentChanged()){
             forceLoad();
-        else if (mHasResult)
+        }else if (mHasResult){
             deliverResult(listMovie);
+        }
     }
 
     @Override
@@ -49,22 +45,31 @@ public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoade
     protected void onReset() {
         super.onReset();
         onStopLoading();
-        if(mHasResult){
+        if (mHasResult){
             onReleaseResource(listMovie);
             listMovie = null;
             mHasResult = false;
         }
     }
 
-    private static final String API_KEY = "93ede33b0c095238b2240c04b1e9e8ca";
+    public static final String API_KEY = "93ede33b0c095238b2240c04b1e9e8ca";
+
+
+    private void onReleaseResource(ArrayList<MovieItems> listMovie) {
+    }
 
     @Override
     public ArrayList<MovieItems> loadInBackground() {
         SyncHttpClient client = new SyncHttpClient();
         final ArrayList<MovieItems> movieItemses = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/search/movie?api_key="+API_KEY+"&language=en-US&query="+mKumpulanFilm;
-        //String url = "https://api.themoviedb.org/3/movie/now_playing?api_key="+API_KEY+"&language=en-US";
+        String url = "";
+        if (kumpulanFilm == "upcoming"){
+             url = "https://api.themoviedb.org/3/movie/upcoming?api_key="+API_KEY+"&language=en-US";
+        }else{
+             url += "https://api.themoviedb.org/3/movie/now_playing?api_key="+API_KEY+"&language=en-US";
+        }
         client.get(url, new AsyncHttpResponseHandler() {
+
             @Override
             public void onStart() {
                 super.onStart();
@@ -78,7 +83,6 @@ public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoade
                     JSONObject responseObject = new JSONObject(result);
                     Log.d("TAGRESPONSE",responseObject.toString());
                     JSONArray list = responseObject.getJSONArray("results");
-                    //JSONObject list = responseObject.getJSONObject("result");
                     for (int i=0;i<list.length();i++){
                         JSONObject movie = list.getJSONObject(i);
                         MovieItems movieItems = new MovieItems(movie);
@@ -94,11 +98,6 @@ public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoade
 
             }
         });
-
         return movieItemses;
-    }
-
-    private void onReleaseResource(ArrayList<MovieItems> listMovie) {
-
     }
 }

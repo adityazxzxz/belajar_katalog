@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="detail">Detail</string>
     <string name="share">Share</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Masukan_kata</string>
 </resources>
