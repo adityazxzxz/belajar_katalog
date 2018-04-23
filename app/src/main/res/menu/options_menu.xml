@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:menuCategory="container">
-        <item android:id="@+id/search"
+        <item android:id="@+id/menu_search"
             android:title="@string/search"
             android:icon="@drawable/ic_search_white_24dp"
             app:showAsAction="never"/>

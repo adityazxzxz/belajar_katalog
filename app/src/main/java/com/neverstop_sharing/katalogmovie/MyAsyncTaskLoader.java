@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.Header;
  */
 
 //<ArrayList<MovieItems>>
-public class MyAsyncTaskLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<MovieItems>> {
+public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MovieItems>> {
     private ArrayList<MovieItems> listMovie;
     private boolean mHasResult = false;
     private String mKumpulanFilm;

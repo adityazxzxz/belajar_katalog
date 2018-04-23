@@ -2,6 +2,7 @@ package com.neverstop_sharing.katalogmovie;
 
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -55,8 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.menu_bahasa:
                 Toast.makeText(this,"Menu Bahasa",Toast.LENGTH_SHORT).show();
                 return true;
-                default:
-                    return true;
+            case R.id.menu_search:
+                Intent searchIntent = new Intent(MainActivity.this,SearchActivity.class);
+                startActivity(searchIntent);
+                return true;
+            default:
+                return true;
         }
     }
 
