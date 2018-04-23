@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Movie Catalog</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail">Detail</string>
+    <string name="share">Share</string>
+    <string name="bahasa">Language</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Insert name</string>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+</resources>

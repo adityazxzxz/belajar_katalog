@@ -1,6 +1,7 @@
 package com.neverstop_sharing.katalogmovie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -55,7 +57,29 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
                 .into(holder.imgPoster);
         holder.tvJudul.setText(a.getJudul());
         holder.tvDeskripsi.setText(a.getDeskripsi());
-        //holder.tvTgl.setText(a.getTanggal());
+        holder.tvTgl.setText(a.getTanggal());
+        holder.btnDetail.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Log.d("PESAN",getListMovie().get(position).getJudul());
+                Intent intent = new Intent(context,MovieDetail.class);
+                intent.putExtra(MovieDetail.EXTRA_TITLE,getListMovie().get(position).getJudul());
+                intent.putExtra(MovieDetail.EXTRA_POSTER,getListMovie().get(position).getPoster_big());
+                intent.putExtra(MovieDetail.EXTRA_TANGGAL,getListMovie().get(position).getTanggal());
+                intent.putExtra(MovieDetail.EXTRA_VOTE_AVERAGE,getListMovie().get(position).getVote_average());
+                intent.putExtra(MovieDetail.EXTRA_VOTE_COUNT,getListMovie().get(position).getVote_count());
+                intent.putExtra(MovieDetail.EXTRA_DESKRIPSI,getListMovie().get(position).getDeskripsi_full());
+                context.startActivity(intent);
+                //Toast.makeText(context,"Detail "+getListMovie().get(position).getJudul(),Toast.LENGTH_SHORT).show();
+            }
+        }));
+
+        holder.btnShare.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Toast.makeText(context,"Share "+getListMovie().get(position).getJudul(),Toast.LENGTH_SHORT).show();
+            }
+        }));
 
     }
 
@@ -76,6 +100,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             imgPoster = (ImageView)itemView.findViewById(R.id.img_item_poster);
             tvJudul = (TextView)itemView.findViewById(R.id.tv_item_judul);
             tvDeskripsi = (TextView)itemView.findViewById(R.id.tv_item_deskripsi);
+            tvTgl = (TextView)itemView.findViewById(R.id.tv_item_tanggal);
             btnDetail = (Button)itemView.findViewById(R.id.btn_set_detail);
             btnShare = (Button)itemView.findViewById(R.id.btn_set_share);
         }

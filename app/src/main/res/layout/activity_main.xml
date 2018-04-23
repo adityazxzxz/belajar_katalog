@@ -12,20 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:text="Now Playing"
+            android:text="@string/now_playing"
             android:id="@+id/btn_playing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
-            android:text="Upcoming"
+            android:text="@string/upcoming"
             android:id="@+id/btn_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <FrameLayout
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    </FrameLayout>
+</FrameLayout>
 </LinearLayout>

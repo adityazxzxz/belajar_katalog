@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnPlaying = (Button)findViewById(R.id.btn_playing);
+        btnPlaying.setText(String.format(getResources().getString(R.string.now_playing)));
         btnPlaying.setOnClickListener(this);
         btnUpcoming = (Button)findViewById(R.id.btn_upcoming);
+        btnUpcoming.setText(String.format(getResources().getString(R.string.upcoming)));
         btnUpcoming.setOnClickListener(this);
         firstFragment();
     }
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
 
+
         return true;
     }
 
@@ -54,7 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_bahasa:
-                Toast.makeText(this,"Menu Bahasa",Toast.LENGTH_SHORT).show();
+                Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                startActivity(mIntent);
                 return true;
             case R.id.menu_search:
                 Intent searchIntent = new Intent(MainActivity.this,SearchActivity.class);
