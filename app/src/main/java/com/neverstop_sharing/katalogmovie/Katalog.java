@@ -12,11 +12,20 @@ import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.getColumnSt
 
 public class Katalog implements Parcelable {
     private int id;
+    private String id_content;
     private String title;
     private String img_url;
     private String overview;
     private String release_date;
     private String vote_count;
+
+    public String getId_content() {
+        return id_content;
+    }
+
+    public void setId_content(String id_content) {
+        this.id_content = id_content;
+    }
 
     public int getId() {
         return id;
@@ -74,6 +83,7 @@ public class Katalog implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
+        dest.writeString(this.id_content);
         dest.writeString(this.title);
         dest.writeString(this.overview);
         dest.writeString(this.release_date);
@@ -87,6 +97,7 @@ public class Katalog implements Parcelable {
 
     public Katalog(Cursor cursor){
         this.id = getColumnInt(cursor, _ID);
+        this.id_content = getColumnString(cursor,DatabaseContract.KatalogColumn.ID_CONTENT);
         this.title = getColumnString(cursor, DatabaseContract.KatalogColumn.TITLE);
         this.overview = getColumnString(cursor, DatabaseContract.KatalogColumn.OVERVIEW);
         this.release_date = getColumnString(cursor, DatabaseContract.KatalogColumn.RELEASE_DATE);
@@ -96,6 +107,7 @@ public class Katalog implements Parcelable {
 
     protected Katalog(Parcel in) {
         this.id = in.readInt();
+        this.id_content = in.readString();
         this.title = in.readString();
         this.overview = in.readString();
         this.release_date = in.readString();

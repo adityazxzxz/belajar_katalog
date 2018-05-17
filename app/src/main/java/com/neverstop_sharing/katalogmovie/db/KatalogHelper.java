@@ -11,6 +11,7 @@ import com.neverstop_sharing.katalogmovie.Katalog;
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
+import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.KatalogColumn.ID_CONTENT;
 import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.KatalogColumn.IMG_URL;
 import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.KatalogColumn.OVERVIEW;
 import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.KatalogColumn.RELEASE_DATE;
@@ -55,6 +56,7 @@ public class KatalogHelper {
 
                 katalog = new Katalog();
                 katalog.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                katalog.setId_content(cursor.getString(cursor.getColumnIndexOrThrow(ID_CONTENT)));
                 katalog.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 katalog.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
                 katalog.setRelease_date(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_DATE)));
@@ -72,6 +74,7 @@ public class KatalogHelper {
 
     public long insert(Katalog katalog){
         ContentValues initialValues =  new ContentValues();
+        initialValues.put(ID_CONTENT, katalog.getId_content());
         initialValues.put(TITLE, katalog.getTitle());
         initialValues.put(IMG_URL, katalog.getImg_url());
         initialValues.put(RELEASE_DATE, katalog.getRelease_date());
@@ -82,6 +85,7 @@ public class KatalogHelper {
 
     public int update(Katalog katalog){
         ContentValues args = new ContentValues();
+        args.put(ID_CONTENT,katalog.getId_content());
         args.put(TITLE, katalog.getTitle());
         args.put(IMG_URL,katalog.getImg_url());
         args.put(OVERVIEW, katalog.getOverview());

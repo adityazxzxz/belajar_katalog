@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 public class MovieItems {
     private int id;
+    private String id_content;
     private String judul;
     private String deskripsi;
     private String tanggal;
@@ -23,6 +24,7 @@ public class MovieItems {
     public MovieItems(JSONObject object){
         try {
             int id = object.getInt("id");
+            String id_content = object.getString("id");
             String title = object.getString("title");
             String deskripsi = object.getString("overview").substring(0,20)+"...";
             String deskripsi_full = object.getString("overview");
@@ -32,6 +34,7 @@ public class MovieItems {
             String poster = "http://image.tmdb.org/t/p/w92"+object.getString("poster_path");
             String poster_big = "http://image.tmdb.org/t/p/w342"+object.getString("poster_path");
             this.id = id;
+            this.id_content = id_content;
             this.judul = title;
             this.deskripsi = deskripsi;
             this.deskripsi_full = deskripsi_full;
@@ -43,6 +46,14 @@ public class MovieItems {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public String getId_content() {
+        return id_content;
+    }
+
+    public void setId_content(String id_content) {
+        this.id_content = id_content;
     }
 
     public int getId(){

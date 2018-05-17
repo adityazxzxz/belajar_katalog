@@ -63,6 +63,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             public void onItemClicked(View view, int position) {
                 Log.d("PESAN",getListMovie().get(position).getJudul());
                 Intent intent = new Intent(context,MovieDetail.class);
+                intent.putExtra(MovieDetail.EXTRA_ID_CONTENT,getListMovie().get(position).getId_content());
                 intent.putExtra(MovieDetail.EXTRA_TITLE,getListMovie().get(position).getJudul());
                 intent.putExtra(MovieDetail.EXTRA_POSTER,getListMovie().get(position).getPoster_big());
                 intent.putExtra(MovieDetail.EXTRA_TANGGAL,getListMovie().get(position).getTanggal());

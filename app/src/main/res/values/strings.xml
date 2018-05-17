@@ -9,4 +9,5 @@
     <string name="search_hint">Masukan nama</string>
     <string name="now_playing">Sedang tayang</string>
     <string name="upcoming">Akan datang</string>
+    <string name="favorite">Favorite</string>
 </resources>

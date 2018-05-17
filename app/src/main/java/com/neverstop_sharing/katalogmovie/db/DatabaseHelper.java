@@ -15,9 +15,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
+                    " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL)",
             DatabaseContract.TABLE_KATALOG,
             DatabaseContract.KatalogColumn._ID,
+            DatabaseContract.KatalogColumn.ID_CONTENT,
             DatabaseContract.KatalogColumn.TITLE,
             DatabaseContract.KatalogColumn.IMG_URL,
             DatabaseContract.KatalogColumn.RELEASE_DATE,

@@ -88,6 +88,7 @@ public class MovieAdapter extends BaseAdapter {
             public void onClick(View view) {
                 //Log.d("TAG",mData.get(position).getDeskripsi_full());
                 Intent intent = new Intent(context,MovieDetail.class);
+                intent.putExtra(MovieDetail.EXTRA_ID_CONTENT,mData.get(position).getId_content());
                 intent.putExtra(MovieDetail.EXTRA_TITLE,mData.get(position).getJudul());
                 intent.putExtra(MovieDetail.EXTRA_POSTER,mData.get(position).getPoster_big());
                 intent.putExtra(MovieDetail.EXTRA_TANGGAL,mData.get(position).getTanggal());
