@@ -2,6 +2,7 @@ package com.neverstop_sharing.katalogmovie;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,11 +64,13 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
         vote_average.setText(getIntent().getStringExtra(EXTRA_VOTE_AVERAGE));
         deskripsi_detail.setText(getIntent().getStringExtra(EXTRA_DESKRIPSI));
         judul_detail.setText(getIntent().getStringExtra(EXTRA_TITLE));
+
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_fav_detail){
+
             String id_content = getIntent().getStringExtra(EXTRA_ID_CONTENT);
             String title = getIntent().getStringExtra(EXTRA_TITLE);
             String img = getIntent().getStringExtra(EXTRA_POSTER);
@@ -85,6 +88,7 @@ public class MovieDetail extends AppCompatActivity implements View.OnClickListen
 
             getContentResolver().insert(CONTENT_URI,values);
             setResult(RESULT_ADD);
+            Toast.makeText(MovieDetail.this,"Favorite",Toast.LENGTH_SHORT).show();
         }
     }
 }

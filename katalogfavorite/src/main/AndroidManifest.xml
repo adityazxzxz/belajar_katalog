@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eneverstop.adityapratama.katalogfavorite">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.neverstop_sharing.katalogmovie.READ_DATABASE"/>
+    <uses-permission android:name="com.neverstop_sharing.katalogmovie.WRITE_DATABASE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
