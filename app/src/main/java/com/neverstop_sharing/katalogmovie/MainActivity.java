@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ListView listView;
     MovieAdapter adapter;
-    Button btnPlaying,btnUpcoming;
+    Button btnPlaying,btnUpcoming,btnFavorite;
 
 
     @Override
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnUpcoming = (Button)findViewById(R.id.btn_upcoming);
         btnUpcoming.setText(String.format(getResources().getString(R.string.upcoming)));
         btnUpcoming.setOnClickListener(this);
+        btnFavorite = (Button)findViewById(R.id.btn_fav);
+        btnFavorite.setOnClickListener(this);
         firstFragment();
     }
 
@@ -77,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(v.getId()==R.id.btn_upcoming){
             upComingFragment();
+        }
+        if (v.getId()==R.id.btn_fav){
+            Intent searchIntent = new Intent(MainActivity.this,MovieFavorite.class);
+            startActivity(searchIntent);
         }
     }
 
