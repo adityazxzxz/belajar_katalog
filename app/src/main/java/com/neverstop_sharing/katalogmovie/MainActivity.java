@@ -22,18 +22,29 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.neverstop_sharing.katalogmovie.utility.AlarmPreference;
+import com.neverstop_sharing.katalogmovie.utility.AlarmReceiver;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ListView listView;
     MovieAdapter adapter;
     Button btnPlaying,btnUpcoming,btnFavorite;
+    private AlarmPreference alarmPreference;
+    private AlarmReceiver alarmReceiver;
+    private Calendar calOneTimeDate, calOneTimeTime,calRepeatTimeTime;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        alarmReceiver = new AlarmReceiver();
+        alarmPreference = new AlarmPreference(this);
         btnPlaying = (Button)findViewById(R.id.btn_playing);
         btnPlaying.setText(String.format(getResources().getString(R.string.now_playing)));
         btnPlaying.setOnClickListener(this);
@@ -43,8 +54,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnFavorite = (Button)findViewById(R.id.btn_fav);
         btnFavorite.setOnClickListener(this);
         firstFragment();
+        calRepeatTimeTime = Calendar.getInstance();
+        //setAlarm();
+
     }
 
+    private void setAlarm() {
+        String timer = "15:00";
+        alarmPreference.setRepeatingTime(timer.trim());
+        alarmPreference.setRepeatingMessage("Test notif");
+        alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTime(),alarmPreference.getRepeatingMessage());
+
+    }
 
 
     @Override
@@ -81,8 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             upComingFragment();
         }
         if (v.getId()==R.id.btn_fav){
-            Intent searchIntent = new Intent(MainActivity.this,MovieFavorite.class);
-            startActivity(searchIntent);
+            /*Intent searchIntent = new Intent(MainActivity.this,MovieFavorite.class);
+            startActivity(searchIntent);*/
+            setAlarm();
         }
     }
 

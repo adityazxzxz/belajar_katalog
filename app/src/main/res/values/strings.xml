@@ -10,4 +10,7 @@
     <string name="now_playing">Sedang tayang</string>
     <string name="upcoming">Akan datang</string>
     <string name="favorite">Favorite</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_text">Empty</string>
 </resources>

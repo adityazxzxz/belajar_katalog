@@ -3,6 +3,9 @@
     package="com.neverstop_sharing.katalogmovie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
 
     <permission
         android:name="com.neverstop_sharing.katalogmovie.READ_DATABASE"
@@ -35,7 +38,20 @@
             android:readPermission="com.neverstop_sharing.katalogmovie.READ_DATABASE"
             android:writePermission="com.neverstop_sharing.katalogmovie.READ_DATABASE" />
 
-        <activity android:name=".MovieFavorite"></activity>
+        <activity android:name=".MovieFavorite" />
+
+        <receiver android:name=".ImageFavoriteWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/image_favorite_widget_info" />
+        </receiver>
+        
+        <service android:name=".StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
     </application>
 
 </manifest>
