@@ -3,9 +3,11 @@ package com.neverstop_sharing.katalogmovie;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Binder;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -19,8 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.neverstop_sharing.katalogmovie.db.DatabaseContract.CONTENT_URI;
+
 public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
-    private List<String> mWidgetItems = new ArrayList<>();
+    //private List<Cursor> mWidgetItems = new ArrayList<>();
+    private Cursor mWidgetItems;
     private Context mContext;
     private int mAppWidgetId;
 
@@ -29,25 +34,25 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
 
     }
+
+
+
     @Override
     public void onCreate() {
-        mWidgetItems.add("https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg");
-        mWidgetItems.add("https://i.ytimg.com/vi/5TyDk2PAaJ4/maxresdefault.jpg");
+        this.mWidgetItems = mContext.getContentResolver().query(CONTENT_URI,null,null,null,null);
+        Log.d("Tester","onCreate :"+mWidgetItems);
+       /* mWidgetItems.add("https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg");
+        mWidgetItems.add("https://i.ytimg.com/vi/5TyDk2PAaJ4/maxresdefault.jpg");*/
 
-        /*mWidgetItems.add(BitmapFactory.decodeResource(mContext.getResources(),
-                R.drawable.darth_vader));
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.getResources(),
-                R.drawable.star_wars_logo));
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.getResources(),
-                R.drawable.storm_trooper));
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.starwars));
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.falcon));*/
+
+
     }
 
     @Override
     public void onDataSetChanged() {
-        mWidgetItems.add("https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg");
-        mWidgetItems.add("https://i.ytimg.com/vi/5TyDk2PAaJ4/maxresdefault.jpg");
+        final long idToken = Binder.clearCallingIdentity();
+        this.mWidgetItems = mContext.getContentResolver().query(CONTENT_URI,null,null,null,null);
+        Binder.restoreCallingIdentity(idToken);
     }
 
     @Override
@@ -57,19 +62,20 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getCount() {
-        Log.d("TESTER",String.valueOf(mWidgetItems.size()));
-        return mWidgetItems.size();
+        Log.d("stackremote",String.valueOf(mWidgetItems.getCount()));
+        return mWidgetItems.getCount();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         Log.d("TESTER","tes");
         RemoteViews rv = new RemoteViews(mContext.getPackageName(),R.layout.widget_item);
-        //ImageView img = (ImageView)rv.
+        final MovieItem movieItem = getItem(position);
+        String imageMovie = movieItem.getImage();
         Bitmap bmp = null;
         try {
             bmp = Glide.with(mContext)
-                    .load(mWidgetItems.get(position))
+                    .load(imageMovie)
                     .asBitmap()
                     .error(new ColorDrawable(mContext.getResources().getColor(R.color.colorPrimaryDark)))
                     .into(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL).get();
@@ -87,6 +93,14 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         rv.setOnClickFillInIntent(R.id.imageView,fillIntent);
         return rv;
     }
+
+    private MovieItem getItem(int position) {
+        if (!mWidgetItems.moveToPosition(position)){
+            throw new IllegalStateException("Position invalid");
+        }
+        return new MovieItem(mWidgetItems);
+    }
+
 
     @Override
     public RemoteViews getLoadingView() {

@@ -55,13 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnFavorite.setOnClickListener(this);
         firstFragment();
         calRepeatTimeTime = Calendar.getInstance();
-        //setAlarm();
-
+        setAlarm();
     }
 
     private void setAlarm() {
-        String timer = "15:00";
-        alarmPreference.setRepeatingTime(timer.trim());
+        String timer = "18:50";
+        alarmPreference.setRepeatingTime(timer);
         alarmPreference.setRepeatingMessage("Test notif");
         alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTime(),alarmPreference.getRepeatingMessage());
 
@@ -102,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             upComingFragment();
         }
         if (v.getId()==R.id.btn_fav){
-            /*Intent searchIntent = new Intent(MainActivity.this,MovieFavorite.class);
-            startActivity(searchIntent);*/
-            setAlarm();
+            Intent searchIntent = new Intent(MainActivity.this,MovieFavorite.class);
+            startActivity(searchIntent);
+            //
         }
     }
 
