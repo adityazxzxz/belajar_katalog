@@ -81,7 +81,7 @@ public class LoaderNowPlaying extends AsyncTaskLoader<ArrayList<MovieItems>> {
                 try {
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
-                    Log.d("TAGRESPONSE",responseObject.toString());
+                    //Log.d("TAGRESPONSE",responseObject.toString());
                     JSONArray list = responseObject.getJSONArray("results");
                     for (int i=0;i<list.length();i++){
                         JSONObject movie = list.getJSONObject(i);

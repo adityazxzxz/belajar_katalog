@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setAlarm() {
-        String timer = "18:50";
+        String timer = "03:08";
         alarmPreference.setRepeatingTime(timer);
         alarmPreference.setRepeatingMessage("Test notif");
         alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTime(),alarmPreference.getRepeatingMessage());
