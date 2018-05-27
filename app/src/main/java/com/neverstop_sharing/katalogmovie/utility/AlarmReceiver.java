@@ -10,15 +10,18 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
+import com.neverstop_sharing.katalogmovie.MainActivity;
 import com.neverstop_sharing.katalogmovie.MovieItems;
 import com.neverstop_sharing.katalogmovie.R;
 
@@ -38,23 +41,26 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String EXTRA_TYPE = "type";
 
     private final int NOTIF_ID_REPEATING = 101;
-    private int idNotif = 0;
-    private int maxNotif = 100;
     List<NotificationItem>stackNotif = new ArrayList<>();
     private ArrayList<MovieItems>listMovie = new ArrayList<>();
     Context context;
     private static final String API_KEY = "93ede33b0c095238b2240c04b1e9e8ca";
+    private NotificationCompat.Builder notification;
+    private Handler handler = new Handler();
 
     public AlarmReceiver(){
 
     }
 
+
+
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         this.context = context;
         String message = intent.getStringExtra(EXTRA_MESSAGE);
         String title = "Repeating Alarm";
-        int notifId = NOTIF_ID_REPEATING;
+        final int notifId = 0;
+
 
         //showAlarmNotification(context,title,message,notifId);
 
@@ -87,8 +93,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                                 JSONObject responseObject = new JSONObject(result);
                                 JSONArray list = responseObject.getJSONArray("results");
                                 for (int i=0;i<list.length();i++){
-                                    //JSONObject movie = list.getJSONObject(i);
-                                    Log.d("AlarmStatus",list.getJSONObject(i).getString("title"));
+                                    final String title = list.getJSONObject(i).getString("title");
+                                    final int id = list.getJSONObject(i).getInt("id");
+                                    Log.d("AlarmStatus", String.valueOf(id));
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sendNotification(id,"helo",title);
+                                        }
+                                    },2000);
                                 }
                                 String nowPlayingMovie = responseObject.getJSONArray("results").getJSONObject(0).getString("title");
                                 Log.d("AlarmStatus",nowPlayingMovie);
@@ -109,32 +122,32 @@ public class AlarmReceiver extends BroadcastReceiver {
                     e.printStackTrace();
                 }
             }
+
+
+
         };
 
         thread.start();
 
 
-        NotificationItem notificationItem = new NotificationItem(idNotif,title,message);
-        stackNotif.add(new NotificationItem(idNotif,title,message));
-        sendNotif(context);
-        idNotif++;
         Log.d("AlarmStatus","onReceive");
+
+
     }
 
-    private void sendNotif(Context context) {
-        Log.d("AlarmStatus", String.valueOf(listMovie));
-        NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-        Notification notification = null;
-        if (idNotif < maxNotif){
-            notification = new NotificationCompat.Builder(context)
-                    .setContentTitle("Movie release "+stackNotif.get(idNotif).getSender())
-                    .setContentText(stackNotif.get(idNotif).getMessage())
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setAutoCancel(true)
-                    .build();
-        }
-        manager.notify(idNotif,notification);
+
+    public void sendNotification(int notifyId, String text,String title){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        mBuilder.setSmallIcon(R.drawable.ic_launcher_background);
+        mBuilder.setContentTitle(title);
+        mBuilder.setContentText("Hello World!");
+        Notification notification = mBuilder.build();
+
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(notifyId,notification);
     }
+
+
 
     private void showAlarmNotification(Context context, String title, String message, int notifId) {
         NotificationManager notificationManagerCompat = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
