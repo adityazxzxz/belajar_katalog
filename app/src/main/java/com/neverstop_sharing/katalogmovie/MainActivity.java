@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AlarmPreference alarmPreference;
     private AlarmReceiver alarmReceiver;
     private Calendar calOneTimeDate, calOneTimeTime,calRepeatTimeTime;
+    SharedPreferences sp;
 
 
     @Override
@@ -55,16 +57,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnFavorite.setOnClickListener(this);
         firstFragment();
         calRepeatTimeTime = Calendar.getInstance();
+
         setAlarm();
     }
 
     private void setAlarm() {
-        String timer = "16:26";
-        alarmPreference.setRepeatingTime(timer);
-        alarmPreference.setRepeatingMessage("Test notif");
-        alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTime(),alarmPreference.getRepeatingMessage());
+        //not yet for validation release date
+        String timerRelease = "11:40";
+        String timerReminder = "11:41";
+        sp = getSharedPreferences("AlarmPreference",MODE_PRIVATE);
+        if(!sp.contains("repeatingTime")){
+            alarmPreference.setRepeatingTimeRelease(timerRelease);
+            alarmPreference.setRepeatingMessageReminder("test release");
+            alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTimeRelease(),alarmPreference.getRepeatingMessage(),101);
+            Log.d("SharedPrefStats","timereleaseAdd");
+        }
 
-    }
+        if(!sp.contains("repeatingTimeReminder")){
+            alarmPreference.setRepeatingTimeReminder(timerReminder);
+            alarmPreference.setRepeatingMessageReminder("Test reminder");
+            alarmReceiver.setRepeatingAlarm(this,AlarmReceiver.TYPE_REPEATING,alarmPreference.getRepeatingTimeReminder(),alarmPreference.getRepeatingMessageReminder(),102);
+            Log.d("SharedPrefStats","timereminderadd");
+        }
+
+
+
+
+
+
+
+}
 
 
     @Override

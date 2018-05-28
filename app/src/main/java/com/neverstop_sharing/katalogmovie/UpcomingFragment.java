@@ -51,6 +51,11 @@ public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+    }
+
+    @Override
     public Loader<ArrayList<MovieItems>> onCreateLoader(int id, Bundle args) {
         return new LoaderNowPlaying(getActivity(),"upcoming");
     }

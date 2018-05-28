@@ -6,11 +6,11 @@ import android.util.Log;
 
 public class AlarmPreference {
     private final String PREF_NAME = "AlarmPreference";
-    private final String KEY_ONE_TIME_DATE = "oneTimDate";
-    private final String KEY_ONE_TIME_TIME = "oneTimeTime";
-    private final String KEY_ONE_TIME_MESSAGE = "oneTimeMessage";
-    private final String KEY_REPEATING_TIME = "repeatingTime";
-    private final String KEY_REPEATING_MESSAGE = "repeatingMessage";
+    private final String KEY_REPEATING_TIME_RELEASE = "repeatingTime";
+    private final String KEY_REPEATING_MESSAGE_RELEASE = "repeatingMessage";
+
+    private final String KEY_REPEATING_TIME_REMINDER = "repeatingTimeReminder";
+    private final String KEY_REPEATING_MESSAGE_REMINDER = "repeatingMessageReminder";
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor editor;
@@ -20,23 +20,50 @@ public class AlarmPreference {
         editor = mSharedPreferences.edit();
     }
 
-    public void setRepeatingTime(String time){
-        editor.putString(KEY_REPEATING_TIME,time);
+    public String getKEY_REPEATING_TIME_REMINDER() {
+        return KEY_REPEATING_TIME_REMINDER;
+    }
+
+    public String getKEY_REPEATING_MESSAGE_REMINDER() {
+        return KEY_REPEATING_MESSAGE_REMINDER;
+    }
+
+    public void setRepeatingTimeRelease(String time){
+        editor.putString(KEY_REPEATING_TIME_RELEASE,time);
         editor.commit();
 
     }
 
-    public String getRepeatingTime(){
-        return mSharedPreferences.getString(KEY_REPEATING_TIME,null);
+    public String getRepeatingTimeRelease(){
+        return mSharedPreferences.getString(KEY_REPEATING_TIME_RELEASE,null);
     }
 
-    public void setRepeatingMessage(String message){
-        editor.putString(KEY_REPEATING_MESSAGE,message);
+    public void setRepeatingTimeReminder(String time){
+        editor.putString(KEY_REPEATING_TIME_REMINDER,time);
+        editor.commit();
+
+    }
+
+    public String getRepeatingTimeReminder(){
+        return mSharedPreferences.getString(KEY_REPEATING_TIME_REMINDER,null);
+    }
+
+    public void setRepeatingMessageRelease(String message){
+        editor.putString(KEY_REPEATING_MESSAGE_RELEASE,message);
         editor.commit();
     }
 
     public String getRepeatingMessage(){
-        return mSharedPreferences.getString(KEY_REPEATING_MESSAGE,null);
+        return mSharedPreferences.getString(KEY_REPEATING_MESSAGE_RELEASE,null);
+    }
+
+    public void setRepeatingMessageReminder(String message){
+        editor.putString(KEY_REPEATING_MESSAGE_REMINDER,message);
+        editor.commit();
+    }
+
+    public String getRepeatingMessageReminder(){
+        return mSharedPreferences.getString(KEY_REPEATING_MESSAGE_REMINDER,null);
     }
 
     public void clear(){

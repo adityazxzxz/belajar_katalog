@@ -73,6 +73,11 @@ public class PlayingFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+    }
+
+    @Override
     public Loader<ArrayList<MovieItems>> onCreateLoader(int id, Bundle args) {
         Log.e("Adapter", "onCreateLoader()");
         String kumpulanMovie = "";
